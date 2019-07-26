@@ -5,19 +5,10 @@ def cmd(command) {
 def connectionString
 
 pipeline {
-    agent {
-        label 'BDD'
-    }
-
-	environment  {
-        Storage = credentials('Storage_user')   
-        Base1C = credentials('db_user')
-        Cluster = credentials('Cluster_admin')
-    }
-
+    
     stages {
        
-        stage('Запуск дымовых тестов') {
+        stage('Smoke') {
             steps {
                 timestamps {								
                     cmd("runner xunit ./Tests/Smoke --reportsxunit ГенераторОтчетаJUnitXML{out/xunit/junit.xml};ГенераторОтчетаAllureXML{out/xunit/allure.xml} --xddConfig ./tools/JSON/xunitfor1C.json --ibconnection \"${env.connectionString}\"  --db-user ${Base1C_Usr} --db-pwd  ${Base1C_Psw} --testclient ${Base1C_Usr}:${Base1C_Psw}:1538 --xddExitCodePath out/BuildStatus.log")
