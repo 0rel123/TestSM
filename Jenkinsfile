@@ -5,7 +5,9 @@ def cmd(command) {
 def connectionString
 
 pipeline {
-    
+     agent {
+        label 'BDD'
+    }
     stages {
        
         stage('Smoke') {
